@@ -7,10 +7,10 @@ import session from 'express-session';
 import cors from 'cors';
 import MongoStore from 'connect-mongo';
 
-import { errorHandler, logger, checkAuthorized } from '../utils/middleware.js';
-import userRouter from '../routes/users.js';
-import productRouter from '../routes/products.js';
-import cartRouter from '../routes/carts.js';
+import { errorHandler, logger, checkAuthorized } from './utils/middleware.js';
+import userRouter from './routes/users.js';
+import productRouter from './routes/products.js';
+import cartRouter from './routes/carts.js';
 
 mongoose
     .connect(process.env.MONGODBURI)
@@ -58,4 +58,4 @@ app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
 });
 
-module.exports = app;
+export default app;
