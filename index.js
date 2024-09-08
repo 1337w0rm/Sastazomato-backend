@@ -50,7 +50,7 @@ app.use(
     })
 );
 
-app.options('*', cors());
+app.options('*');
 app.get('/', (req, res) => {
     res.status(200).send('Server running');
 });
