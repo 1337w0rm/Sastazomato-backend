@@ -17,12 +17,14 @@ mongoose
     .then(() => console.log('Connected to Database'))
     .catch((err) => console.log(err));
 
+const URL =
+    process.env.NODE_ENV === 'production'
+        ? process.env.PRODURL
+        : process.env.DEVURL;
+
 app.use(
     cors({
-        origin:
-            process.env.NODE_ENV === 'production'
-                ? process.env.PRODURL
-                : process.env.DEVURL,
+        origin: URL,
         credentials: true,
         allowedHeaders: true,
     })
@@ -48,6 +50,7 @@ app.use(
     })
 );
 
+app.options('*', cors());
 app.get('/', (req, res) => {
     res.status(200).send('Server running');
 });
@@ -59,7 +62,7 @@ app.use('/api/cart', checkAuthorized, cartRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
+    console.log(`Server started on ${URL}:${PORT}`);
 });
 
 export default app;
