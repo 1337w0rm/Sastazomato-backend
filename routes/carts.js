@@ -33,7 +33,7 @@ cartRouter.post('/add', async (req, res) => {
     const addedItem = await Cart.findOne({ 'items.product': id }).populate(
         'items.product'
     );
-    res.status(201).send({ item: addedItem });
+    res.status(201).send({ message: 'Item added to cart' });
 });
 
 cartRouter.delete('/delete/:id', async (req, res) => {
