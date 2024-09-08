@@ -24,6 +24,7 @@ app.use(
                 ? process.env.PRODURL
                 : process.env.DEVURL,
         credentials: true,
+        allowedHeaders: true,
     })
 );
 
