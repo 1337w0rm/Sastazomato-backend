@@ -19,7 +19,10 @@ mongoose
 
 app.use(
     cors({
-        origin: process.env.NODE_ENV === 'dev' ? 'http://localhost:5173' : '*',
+        origin:
+            process.env.NODE_ENV === 'dev'
+                ? process.env.DEVURL
+                : process.env.PRODURL,
         credentials: true,
     })
 );
