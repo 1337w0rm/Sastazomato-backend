@@ -40,7 +40,7 @@ app.use(
         resave: false,
         secret: process.env.SESSION_SECRET,
         cookie: {
-            secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 60000 * 60 * 24,
         },
