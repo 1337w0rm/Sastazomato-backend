@@ -26,7 +26,6 @@ app.use(
     cors({
         origin: URL,
         credentials: true,
-        allowedHeaders: true,
     })
 );
 
@@ -50,7 +49,6 @@ app.use(
     })
 );
 
-app.options('*');
 app.get('/', (req, res) => {
     res.status(200).send('Server running');
 });
