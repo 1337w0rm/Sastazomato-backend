@@ -33,6 +33,7 @@ app.use(
 
 app.use(express.json());
 app.use(logger);
+app.set('trust proxy', 1);
 
 app.use(
     session({
@@ -40,7 +41,7 @@ app.use(
         resave: false,
         secret: process.env.SESSION_SECRET,
         cookie: {
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 60000 * 60 * 24,
         },
