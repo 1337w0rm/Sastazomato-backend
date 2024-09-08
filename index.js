@@ -20,9 +20,9 @@ mongoose
 app.use(
     cors({
         origin:
-            process.env.NODE_ENV === 'dev'
-                ? process.env.DEVURL
-                : process.env.PRODURL,
+            process.env.NODE_ENV === 'production'
+                ? process.env.PRODURL
+                : process.env.DEVURL,
         credentials: true,
     })
 );
