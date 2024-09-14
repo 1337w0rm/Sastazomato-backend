@@ -58,4 +58,19 @@ userRouter.get('/status', async (req, res) => {
     return res.status(200).send({ isAuthenticated: true, user });
 });
 
+userRouter.post('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).send({ error: 'Failed to logout' });
+            }
+
+            res.clearCookie('connect.sid');
+            return res.send({ message: 'Logged out successfully' });
+        });
+    } else {
+        return res.status(400).send({ error: 'No session found' });
+    }
+});
+
 export default userRouter;
