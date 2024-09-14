@@ -73,4 +73,26 @@ userRouter.post('/logout', (req, res) => {
     }
 });
 
+userRouter.put('/update', async (req, res) => {
+    const { name, email, phone, address } = req.body;
+    try {
+        // Find user by ID from session and update
+        const updatedUser = await User.findByIdAndUpdate(
+            req.session.user.id,
+            { name, email, phone, address },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            message: 'User updated successfully',
+            updatedUser,
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating user', error });
+    }
+});
 export default userRouter;
