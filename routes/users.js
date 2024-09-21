@@ -44,7 +44,6 @@ userRouter.post('/login', async (req, res) => {
         return res.status(401).send({ error: 'Inavlid username or password' });
 
     req.session.user = { id: user.id };
-    console.log(user);
     res.status(200).send({ message: 'Successfull', user });
 });
 

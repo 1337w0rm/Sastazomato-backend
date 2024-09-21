@@ -11,6 +11,7 @@ import { errorHandler, logger, checkAuthorized } from './utils/middleware.js';
 import userRouter from './routes/users.js';
 import productRouter from './routes/products.js';
 import cartRouter from './routes/carts.js';
+import orderRouter from './routes/order.js';
 
 mongoose
     .connect(process.env.MONGODBURI)
@@ -58,7 +59,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRouter);
 app.use('/api/products', checkAuthorized, productRouter);
 app.use('/api/cart', checkAuthorized, cartRouter);
-
+app.use('/api/order', checkAuthorized, orderRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

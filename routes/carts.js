@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import User from '../schemas/userSchema.js';
 import Product from '../schemas/productSchema.js';
 import Cart from '../schemas/cartSchema.js';
 const cartRouter = Router();
 
 cartRouter.get('/', async (req, res) => {
-    console.log(req.session.user.id);
     const cart = await Cart.findOne({ user: req.session.user.id }).populate(
         'items.product'
     );
