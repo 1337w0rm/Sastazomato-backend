@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import Order from '../schemas/orderSchema.js';
-import User from '../schemas/userSchema.js';
 import Cart from '../schemas/cartSchema.js';
 
 const orderRouter = Router();
@@ -24,10 +23,12 @@ orderRouter.get('/', async (req, res) => {
             orderId: order.orderId,
             orderDate: order.orderDate,
             totalAmount: order.totalAmount,
+            status: order.status,
             items: order.items.map((item) => ({
                 product: {
                     name: item.product.name,
                     price: item.product.discountedPrice,
+                    brand: item.product.brand,
                 },
                 quantity: item.quantity,
             })),
@@ -43,7 +44,7 @@ orderRouter.get('/', async (req, res) => {
     }
 });
 
-orderRouter.get('/neworder', async (req, res) => {
+orderRouter.post('/neworder', async (req, res) => {
     try {
         const userId = req.session.user.id;
         const cart = await Cart.findOne({ user: userId }).populate(
@@ -62,7 +63,7 @@ orderRouter.get('/neworder', async (req, res) => {
             totalAmount += item.product.discountedPrice * item.quantity;
         }
 
-        const newOrder = new Order({
+        let newOrder = new Order({
             orderId: orderId,
             user: userId,
             items: cart.items.map((item) => ({
@@ -72,7 +73,8 @@ orderRouter.get('/neworder', async (req, res) => {
             totalAmount: totalAmount,
         });
 
-        await newOrder.save();
+        newOrder = await newOrder.save();
+        newOrder = await newOrder.populate('items.product');
 
         // Clear the cart
         cart.items = [];
